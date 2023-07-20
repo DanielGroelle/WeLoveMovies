@@ -13,11 +13,16 @@ function list(showing) {
     }
 }
 
-function read() {
-    
+function read(movieId) {
+    const foundMovie = knex("movies")
+        .select("*")
+        .where({"movie_id": Number(movieId)})
+        .then((data)=>data[0]);
+        
+    return foundMovie;
 }
 
 module.exports = {
     list,
     read,
-}
+};
