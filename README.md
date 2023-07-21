@@ -17,6 +17,6 @@ In order to connect this backend to a database, you must create a .env file with
 | src/errors/ | contains various error handlers for non-existent routes and http methods that are not supported|
 | src/movies/ | contains a .router, .controller, and .service file that route for the /movies route, handle data from the db, and perform queries to the db respectively |
 | src/reviews/ | contains a .router, .controller, and .service file that route for the /reviews route, handle data from the db, and perform queries to the db respectively |
-| src/theaters | contains a .router, .controller, and .service file that route for the /theaters route, handle data from the db, and perform queries to the db respectively |
+| src/theaters/ | contains a .router, .controller, and .service file that route for the /theaters route, handle data from the db, and perform queries to the db respectively |
 | src/app.js | defines the backend app and routes to each route appropriately. also accomodates for CORS with the cors package |
 | src/server.js | defines the port to listen on |
