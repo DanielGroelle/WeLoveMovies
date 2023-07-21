@@ -1,9 +1,11 @@
 const knex = require("../db/connection");
 
 async function list() {
+    //get all theater data
     let theatersData = await knex("theaters")
         .select("*");
 
+    //get all movies data
     let moviesData = await knex("movies as m")
         .select("*")
         .join("movies_theaters as mv", "m.movie_id", "=", "mv.movie_id");
@@ -11,9 +13,11 @@ async function list() {
     //initializing an object that has each movie for a theater assigned to an array
     const theaterIdToMovies = {};
     for (const movie of moviesData) {
+        //if the key-value pair doesnt exist yet initialize it to an empty array
         if (theaterIdToMovies[movie.theater_id] === undefined) {
             theaterIdToMovies[movie.theater_id] = [];
         }
+        //push the current movie to the correct array based on theater_id
         theaterIdToMovies[movie.theater_id].push(movie);
     }
 
@@ -26,6 +30,7 @@ async function list() {
     });
 }
 
+//select all theater data where the movieId matches
 function read(movieId) {
     return knex("theaters as t")
         .select("*")

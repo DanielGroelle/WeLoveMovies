@@ -1,5 +1,6 @@
 const knex = require("../db/connection");
 
+//read a specific review based on reviewId
 function read(reviewId) {
     const foundReview = knex("reviews")
         .select("*")
@@ -9,6 +10,7 @@ function read(reviewId) {
     return foundReview;
 }
 
+//delete a review from the db based on reviewId
 function destroy(reviewId) {
     return knex("reviews")
         .where({"review_id": Number(reviewId)})
@@ -16,7 +18,7 @@ function destroy(reviewId) {
 }
 
 async function update(reviewId, reviewData) {
-    //perform the update
+    //perform the update to the review
     await knex("reviews")
         .where({"review_id": Number(reviewId)})
         .update(reviewData, ["*"]);
@@ -37,16 +39,18 @@ async function update(reviewId, reviewData) {
 }
 
 async function list(movieId) {
+    //get review data matching movieId
     const reviewData = await knex("reviews")
         .select("*")
         .where({"movie_id": Number(movieId)});
 
+    //get critic data matching movieId
     const criticData = await knex("critics as c")
         .select(["c.*"])
         .join("reviews as r", "r.critic_id", "=", "c.critic_id")
         .where({"movie_id": Number(movieId)});
 
-    //creating a key value pair between the critic id and critic data
+    //creating a key value pair between the critic_id and criticData
     const criticIdToCritic = {};
     for (const critic of criticData) {
         criticIdToCritic[critic.critic_id] = critic;

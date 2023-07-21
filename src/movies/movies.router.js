@@ -13,6 +13,7 @@ router.route("/:movieId")
 const theatersRouter = require("../theaters/theaters.router");
 const reviewsRouter = require("../reviews/reviews.router");
 
+//routing to theaters and reviews, first checks if the movieId is valid
 router.use("/:movieId/theaters", controller.movieExists, theatersRouter);
 router.use("/:movieId/reviews", controller.movieExists, reviewsRouter);
 
