@@ -12,7 +12,10 @@ async function movieExists(req, res, next) {
 }
 
 async function list(req, res, next) {
-    const showing = req.query?.["is_showing"];
+    let showing;
+    if (req.query) {
+        showing = req.query["is_showing"];
+    }
     const data = await moviesService.list(showing);
     res.status(200).json({data});
 }

@@ -11,8 +11,9 @@ async function list() {
     //initializing an object that has each movie for a theater assigned to an array
     const theaterIdToMovies = {};
     for (const movie of moviesData) {
-        //null coalescing operator to initialize the array if it is undefined
-        theaterIdToMovies[movie.theater_id] ??= [];
+        if (theaterIdToMovies[movie.theater_id] === undefined) {
+            theaterIdToMovies[movie.theater_id] = [];
+        }
         theaterIdToMovies[movie.theater_id].push(movie);
     }
 
