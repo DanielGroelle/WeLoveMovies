@@ -13,7 +13,7 @@ router.route("/:movieId")
 const theatersRouter = require("../theaters/theaters.router");
 const reviewsRouter = require("../reviews/reviews.router");
 
-router.route("/:movieId/theaters", controller.movieExists, theatersRouter);
-router.route("/:movieId/reviews", controller.movieExists, reviewsRouter);
+router.use("/:movieId/theaters", controller.movieExists, theatersRouter);
+router.use("/:movieId/reviews", controller.movieExists, reviewsRouter);
 
 module.exports = router;

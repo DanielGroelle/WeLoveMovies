@@ -12,9 +12,9 @@ async function reviewExists(req, res, next) {
 }
 
 async function list(req, res, next) {
-    const {reviewId} = req.params;
-    const data = await reviewsService.list(reviewId);
-    res.send(200).json({data});
+    const {movieId} = req.params;
+    const data = await reviewsService.list(movieId);
+    res.status(200).json({data});
 }
 
 async function destroy(req, res, next) {

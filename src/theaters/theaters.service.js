@@ -11,6 +11,7 @@ async function list() {
     //initializing an object that has each movie for a theater assigned to an array
     const theaterIdToMovies = {};
     for (const movie of moviesData) {
+        //null coalescing operator to initialize the array if it is undefined
         theaterIdToMovies[movie.theater_id] ??= [];
         theaterIdToMovies[movie.theater_id].push(movie);
     }
@@ -24,6 +25,14 @@ async function list() {
     });
 }
 
+function read(movieId) {
+    return knex("theaters as t")
+        .select("*")
+        .join("movies_theaters as mv", "mv.theater_id", "=", "t.theater_id")
+        .where({"movie_id": Number(movieId)});
+}
+
 module.exports = {
     list,
+    read,
 };

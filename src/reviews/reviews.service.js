@@ -36,8 +36,34 @@ async function update(reviewId, reviewData) {
     return data;
 }
 
+async function list(movieId) {
+    const reviewData = await knex("reviews")
+        .select("*")
+        .where({"movie_id": Number(movieId)});
+
+    const criticData = await knex("critics as c")
+        .select(["c.*"])
+        .join("reviews as r", "r.critic_id", "=", "c.critic_id")
+        .where({"movie_id": Number(movieId)});
+
+    //creating a key value pair between the critic id and critic data
+    const criticIdToCritic = {};
+    for (const critic of criticData) {
+        criticIdToCritic[critic.critic_id] = critic;
+    }
+
+    //joining the critic data with each review
+    return reviewData.map(review => {
+        return {
+            ...review,
+            critic: criticIdToCritic[review.critic_id]
+        }
+    });
+}
+
 module.exports = {
     read,
     destroy,
     update,
+    list,
 }
